@@ -31,10 +31,6 @@ class User implements UserInterface, \Serializable
      *     maxMessage="The name is too long.",
      *     groups={"Registration", "Profile"}
      * )
-     * @Assert\Regex(
-     *     pattern="/^[a-zA-Z]+$/",
-     *     message="Please enter valid name"
-     * )
      */
     public $firstName;
 
@@ -43,10 +39,6 @@ class User implements UserInterface, \Serializable
      *
      * @Assert\NotBlank(
      *     message = "Please enter your surname."
-     * )
-     * @Assert\Regex(
-     *     pattern="/^[a-zA-Z]+$/",
-     *     message="Please enter valid surname"
      * )
      */
     private $lastName;
