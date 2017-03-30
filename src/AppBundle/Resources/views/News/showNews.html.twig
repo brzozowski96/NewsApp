@@ -1,0 +1,87 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+{% block pageTitle %}Profile | {{ parent() }}{% endblock %}
+
+{% block pageContainer %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form action="{{ path('show_news') }}" method="post">
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-3"><h4>Name: </h4></div>
+                                        <div class="col-xs-9">
+                                            <input type="text" class="form-control" name="name" id="name"
+                                                placeholder=
+                                                {% if name is not null %}
+                                                    {{ name }}
+                                                    {% else %}
+                                                    "Enter name"
+                                                {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <textarea class="form-control" rows="6" name="description" id="description"
+                                    placeholder="Enter your post....">{% spaceless %}
+                                    {% if description is not null %}
+                                        {{ description }}
+                                    {% endif %}{% endspaceless %}</textarea>
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <button type="submit" name="addPost" id="addPost" class="btn btn-info"><span>Add post</span></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                {% for post in news %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-success">{{ post.name }}</h3>
+                        <p><b>Author:</b> <i>{{ post.firstName }} {{ post.lastName }}</i></p>
+                        <p class="post-content">{{ post.description }}</p>
+                        <hr class="post-separator">
+                        {% if app.user.id == post.authorId %}
+                        {#<a href="#" class="post-action">#}
+                            {#<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>#}
+                            {#Lubię to!#}
+                        {#</a>#}
+                        <a href="{{ path('news_update', {'id': post.id}) }}" class="post-action">
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                            Edit
+                        </a>
+                        <a href="{{ path('news_delete', {'id': post.id}) }}" class="post-action">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            Delete
+                        </a>
+                            {% endif %}
+                        <span class="post-date">
+                            {% if post.updatedAt is null %}
+                                {{ post.createdAt|date('H:i, d.m.Y') }}
+                            {% else %}
+                                {{ post.updatedAt|date('H:i, d.m.Y') }}
+                            {% endif %}
+                        </span>
+
+                    </div>
+                </div>
+                {% else %}
+                <div class="panel panel-default">
+                    <div class="panel-body centerElement">
+                        <h3>Lack of posts! </h3>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

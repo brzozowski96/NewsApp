@@ -1,0 +1,9 @@
+parameters:
+    registration_key: JDH9JD6394JF8EDID73JR
+    admin_email: brzozowski96@gmail.com
+
+twig:
+    globals:
+        meta_description: NewsApp - Join us and publish what you want
+        meta_keywords: NewsApp, News, Publish
+        meta_author: Karol Brzozowski

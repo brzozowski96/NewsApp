@@ -1,0 +1,26 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block pageTitle %}Register | {{ parent() }}{% endblock %}
+
+{% block pageContainer %}
+
+<div class="container">
+    <div class="col-md-2"></div>
+    <div class="panel panel-default col-md-8">
+        <div class="panel-body">
+            <h1>Register</h1>
+
+            {{ form_start(form, {'method': 'post', 'action': path('user_registration'), 'attr': {'class': 'fos_user_registration_register', 'novalidate': 'true'}}) }}
+            {{ form_widget(form) }}
+            <div>
+                <input type="submit" class="btn btn-success" value="Register" />
+                <a href="{{ path('login') }}" class="btn btn-default">Back</a>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
