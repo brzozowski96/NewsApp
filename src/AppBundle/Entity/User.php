@@ -2,7 +2,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+//use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -11,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
 * @UniqueEntity(fields="email", message="Email already taken")
 */
-class User implements UserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
     * @ORM\Column(type="integer")
@@ -126,6 +127,26 @@ class User implements UserInterface, \Serializable
     {
     }
 
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -133,6 +154,7 @@ class User implements UserInterface, \Serializable
         $this->id,
         $this->username,
         $this->password,
+        $this->isActive,
         // see section on salt below
         // $this->salt,
         ));
@@ -145,6 +167,7 @@ class User implements UserInterface, \Serializable
         $this->id,
         $this->username,
         $this->password,
+        $this->isActive,
         // see section on salt below
         // $this->salt
         ) = unserialize($serialized);
